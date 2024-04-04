@@ -26,6 +26,15 @@ This is a simple URL shortener project built using Node.js, Express.js, and Mong
    - Create a `.env` file based on the provided `config-sample.png`.
    - Set `DB_URL` to your MongoDB connection string.
 
+   ```
+      DB_URL=
+      DB_PASSWORD=
+      PORT=8080
+      VERSION=v1
+      JWT_SECRET=
+      JWT_EXPIRES_IN=1d
+   ```
+
 4. Start the server:
 
    ```
@@ -34,13 +43,38 @@ This is a simple URL shortener project built using Node.js, Express.js, and Mong
 
 ## Usage
 
-- To shorten a URL, send a POST request to `/api/v1/` with a JSON payload containing the long URL:
+- To shorten a URL, send a POST request to `/api/v1/` with a JSON payload containing the long URL, and set your apiKey at the header of the request.
 
   ```
   {
     "longUrl": "https://example.com/very-long-url-path"
   }
   ```
+
+- To signup as a user, send a post request to `/users/signup` with a JSON payload containing your name, email, and password.
+
+  ```
+  {
+    "name": "ABCD",
+    "email": "ABCD@gmail.com",
+    "password": "12345678"
+  }
+  ```
+
+- To login, send a post request to `/users/login` with a JSON payload containing your email and password. You'll get your session token as response. Your email will be validated.
+
+```
+  {
+    "email": "ABCD@gmail.com",
+    "password": "12345678"
+  }
+```
+
+- To verify your userDetails, send a get request to `/users/get` with your header containing the field`"Authorization": Bearer <YOUR_TOKEN>`
+
+- To update your details, send a patch request to `users/` with your header containing the field`"Authorization": Bearer <YOUR_TOKEN>` and the body containing the information to be updated i.e. email,name, or password.
+
+- To get all userDetails, send a get request to `/users/all`, with your header containing the field`"Authorization": Bearer <YOUR_TOKEN>`. This is an protected route i.e only the admins will have access.
 
 - To access a shortened URL, simply navigate to `/{shortUrl}` in your browser.
 
