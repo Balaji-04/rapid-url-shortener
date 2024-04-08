@@ -8,7 +8,7 @@ const rateLimit = require('express-rate-limit');
 const decodeRoute = require('./routes/decodeRoute');
 const apiRoute = require('./routes/apiRoute');
 const userRoute = require('./routes/userRoute');
-//const parseResponse = require('./utilities/parseResponse');
+const compression = require('compression');
 
 dotenv.config({
     path: './config.env'
@@ -26,6 +26,7 @@ app.use(limiter);
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
+app.use(compression());
 
 const DB_URL = process.env.DB_URL.replace('<password>', process.env.DB_PASSWORD);
 mongoose.connect(DB_URL).then( () => {
@@ -43,6 +44,7 @@ app.get(`/health`, (req,res)=> {
 app.use('/', decodeRoute);
 app.use(`/api/${process.env.VERSION}/`, apiRoute);
 app.use('/users', userRoute);
+
 
 
 //SERVER

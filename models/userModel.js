@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
     },
     createdAt: {
         type: String, 
-        default: Date.now,
+        default: new Date().toISOString(),
         select: false
     },
 });

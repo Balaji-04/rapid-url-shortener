@@ -8,7 +8,7 @@ const decodeKey = catchASync(async function (req, res){
     if (document){
         res.status(200).redirect(document.longURL);
     }else{
-        res.status(404).end("Unknown ERROR Occured!");
+        res.status(404).end("URL not found!");
     }
 });
 

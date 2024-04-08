@@ -89,6 +89,9 @@ const login = catchASync(async function(req, res, next){
     }
 
     const user = await UserModel.findOne({ email }).select('+password');
+    if (!user){
+        return res.status(404).json( parseResponse('error', 'user doesn\'t exist') );
+    }
     if (!user.checkPassword(user.password, password)){
         return res.status(400).json( parseResponse('error', 'Invalid userName or Password') );
     }
