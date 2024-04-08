@@ -22,6 +22,7 @@ const limiter = rateLimit({
 });
 
 // MIDDLEWARES
+app.set('trust proxy');
 app.use(limiter);
 app.use(cors());
 app.use(helmet());
