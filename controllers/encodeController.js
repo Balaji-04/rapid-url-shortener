@@ -24,14 +24,11 @@ const encodeRoute = catchASync(async function (req,res) {
     const doc = await UrlModel.findOne({
         longURL: longURL
     });
-    let protocol = 'http';
-    if (req.secure) {
-        protocol = 'https';      
-    }
     if (doc) {
         return res.status(200).json(
             parseResponse('success',{
-                shortURL: `${protocol}://${req.hostname}:${process.env.PORT}/${urlKey}`
+                //shortURL: `${protocol}://${req.hostname}:${process.env.PORT}/${urlKey}`
+                shortURL: `${req.protocol}://${req.hostname}/${urlKey}`
             })
         );
     }
@@ -41,7 +38,7 @@ const encodeRoute = catchASync(async function (req,res) {
         longURL
     });
     res.status(200).json( parseResponse('success', {
-        shortURL: `${protocol}://${req.hostname}:${process.env.PORT}/${urlKey}`
+        shortURL: `${req.protocol}://${req.hostname}/${urlKey}`
     }));
 });
 
